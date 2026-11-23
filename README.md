@@ -8,7 +8,7 @@ Group-8 Departmental Announcement System with Drupal
 Uygulama **Drupal 11** üzerine kuruludur ve **Apache + MariaDB + PHP** ile çalışır.
 
 ## Ekip
-|----------|-----------|
+
 | Kuzey Elyasa Turan | 251307057 |
 | İpeksu Atakan | 251307064 |
 
@@ -52,7 +52,7 @@ Kurulum sihirbazında sırasıyla:
 2. Kurulum profili olarak **Standart** seçin.
 3. Veritabanı ekranında şu bilgileri girin:
 
-    |----------|-----------|
+  
    | Veritabanı türü | MySQL, MariaDB, Percona Server veya eşdeğeri |
    | Veritabanı adı | `drupal` |
    | Veritabanı kullanıcısı | `drupaluser` |
@@ -75,7 +75,7 @@ sudo chmod 555 /var/www/drupal/web/sites/default
 
 ## Giriş Bilgileri
 
-|----------|-----------|
+
 | Yönetici kullanıcı adı | [admin] |
 | Yönetici parolası | [parola] |
 | Giriş sayfası | `http://localhost/user/login` |
@@ -101,7 +101,6 @@ Varsayılan değerler ortam değişkenleriyle değiştirilebilir:
 sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupal_kur.sh
 ```
 
-|----------|-----------|
 | `DB_NAME` | `drupal` |
 | `DB_USER` | `drupaluser` |
 | `DB_PASS` | Rastgele üretilir |
@@ -120,7 +119,7 @@ sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupa
 
 ## Sorun Giderme
 
-|----------|-----------|
+
 | `Bu betik root yetkisiyle çalışmalı` | `sudo bash drupal_kur.sh` ile çalıştırın. |
 | `Bu betik Ubuntu için yazıldı` | Ubuntu 24.04 veya 26.04 kullanın. |
 | `drupal.org'a ulaşılamıyor` | İnternet bağlantınızı kontrol edin. |
