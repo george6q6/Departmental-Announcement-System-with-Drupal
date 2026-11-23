@@ -33,7 +33,7 @@ cd <proje-klasoru>
 ### 2. Kurulum betiğini çalıştırın
 
 ```bash
-sudo bash drupal_kur.sh (Bu komut yerine 'sudo ./drupal_kurulum.sh' yazılabilir.)
+sudo bash drupal_kurulum.sh (Bu komut yerine 'sudo ./drupal_kurulum.sh' yazılabilir.)
 ```
 
 Kurulum birkaç dakika sürebilir. Betik bitince ekranda "Kurulum betiği tamamlandı." mesajını ve kurulan sürümleri görmelisiniz.
@@ -98,7 +98,7 @@ Betik **tekrar çalıştırılabilir**: Drupal zaten indirilmişse o adımı atl
 Varsayılan değerler ortam değişkenleriyle değiştirilebilir:
 
 ```bash
-sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupal_kur.sh
+sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupal_kurulum.sh
 ```
 
 | `DB_NAME` | `drupal` |
@@ -111,7 +111,7 @@ sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupa
 
 ```
 [Kendi yapınıza göre düzenleyin, ör.]
-├── drupal_kur.sh          # Otomatik kurulum betiği
+├── drupal_kurulum.sh          # Otomatik kurulum betiği
 ├── README.md
 ├── config/                # [Varsa] Drupal yapılandırma dışa aktarımı
 └── modules/custom/        # [Varsa] Özel modüller
@@ -120,7 +120,7 @@ sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupa
 ## Sorun Giderme
 
 
-| `Bu betik root yetkisiyle çalışmalı` | `sudo bash drupal_kur.sh` ile çalıştırın. |
+| `Bu betik root yetkisiyle çalışmalı` | `sudo bash drupal_kurulum.sh` ile çalıştırın. |
 | `Bu betik Ubuntu için yazıldı` | Ubuntu 24.04 veya 26.04 kullanın. |
 | `drupal.org'a ulaşılamıyor` | İnternet bağlantınızı kontrol edin. |
 | `Yetersiz disk alanı` | `/var` altında en az 2 GB yer açın. |
