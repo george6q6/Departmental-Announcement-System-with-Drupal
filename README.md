@@ -132,3 +132,53 @@ sudo DB_NAME=mydb DB_USER=myuser DB_PASS=gizli SITE_DIR=/var/www/site bash drupa
 ## Güvenlik Notu
 
 `/root/.drupal_db_bilgileri` dosyası veritabanı parolasını içerir. Bu dosyayı **Git deposuna eklemeyin**.
+
+## Yedekleme ve Geri Yükleme
+
+Sitenin veritabanını ve dosyalarını yedeklemek ve gerektiğinde geri yüklemek için iki betik kullanılır. İkisi de `root` yetkisiyle çalıştırılmalıdır.
+
+| `yedekleme.sh` | Veritabanını ve site dosyalarını tarih damgalı olarak yedekler |
+| `geri_yukle.sh` | Alınmış bir yedeği siteye geri yükler |
+
+### Ortak gereksinimler
+
+- `/root/.drupal_db_bilgileri` dosyası (kurulum betiği tarafından oluşturulur). İçinde `DB_USER`, `DB_PASS` ve `DB_NAME` değişkenleri tanımlı olmalıdır.
+- Yedeklerin saklandığı klasör: `/var/backups/drupal`
+- Drupal site klasörü: `/var/www/drupal`
+
+### Yedekleme (`yedekleme.sh`)
+
+```bash
+sudo ./yedekleme.sh
+```
+
+Betik her çalıştığında `/var/backups/drupal` klasöründe (yoksa oluşturur) aynı tarih damgasını taşıyan iki dosya üretir:
+
+- `veritabani_<TARIH>.sql`: `mysqldump` ile alınan veritabanı dökümü
+- `dosyalar_<TARIH>.tar.gz`: `/var/www/drupal` klasörünün sıkıştırılmış arşivi (yüklenen ekler dahil)
+
+`<TARIH>` biçimi `YYYY-AA-GG_SS-DD` şeklindedir, örneğin `2026-11-21_14-02`.
+
+### Geri yükleme (`geri_yukle.sh`)
+
+```bash
+# En son alınan yedeği geri yükler
+sudo ./geri_yukle.sh
+
+# Belirtilen tarihli yedeği geri yükler
+sudo ./geri_yukle.sh 2026-11-21_14-02
+```
+
+Tarih verilmezse betik en yeni `veritabani_*.sql` dosyasını bulur ve onun tarihini kullanır. Çalışma adımları:
+
+1. Seçilen tarihe ait `.sql` ve `.tar.gz` dosyalarının varlığı kontrol edilir. Biri eksikse betik mevcut yedekleri listeler ve hata ile çıkar.
+2. `.sql` dosyası `DB_NAME` veritabanına aktarılır.
+3. `.tar.gz` arşivi açılarak site dosyaları özgün yerlerine yerleştirilir.
+4. `sites/default/files` klasörünün sahibi `www-data:www-data` yapılır, böylece yüklenen ekler web sunucusu tarafından okunabilir.
+5. `drush` kuruluysa Drupal önbelleği temizlenir (`drush cache:rebuild`).
+
+### Dikkat
+
+- Geri yükleme, sitenin **mevcut veritabanı ve dosyalarının üzerine yazar**. Yedek tarihinden sonra eklenen duyurular ve dosyalar kaybolur. Emin değilseniz önce `yedekleme.sh` ile yeni bir yedek alın.
+- Betikler eski yedekleri **otomatik silmez**. Disk dolmaması için `/var/backups/drupal` klasörünü zaman zaman temizleyin.
+- Yedekleme düzenli olması için `cron` ile zamanlanabilir, örneğin her gece 02:00 için `0 2 * * * /yol/yedekleme.sh`.
